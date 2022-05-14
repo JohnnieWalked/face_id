@@ -1,0 +1,202 @@
+body
+	position: relative
+
+.body_bg
+	&:before
+		content: ''
+		width: 100%
+		height: 100%
+		position: absolute
+		background: url('../img/bg/body_bg_tech.jpg') center center/cover no-repeat
+		z-index: -1
+		transform: rotate(180deg)
+
+
+header
+	display: flex
+	align-items: center
+	justify-content: center
+	height: 100vh
+
+.name
+	width: 100%
+	// background: rgba(18, 166, 199, 0.7)
+	background: linear-gradient(rgba(255,86,86,1) -95%, rgba(7,7,22,0.7) 142%)
+	border-top: 5px solid $turquoise
+	border-bottom: 5px solid $turquoise
+	&_item
+		font-size: 34px
+		line-height: 100px
+		font-weight: 500
+		text-align: center
+		text-transform: uppercase
+		color: $white
+
+.program
+	@include section
+	&_item
+		display: flex
+		align-items: center
+		justify-content: center
+		&_img
+			margin-right: 30px
+			width: 800px
+			img
+				border: 5px solid $turquoise
+				width: 100%
+		&_descr
+			width: 776px
+			&_header
+				font-weight: 500
+				font-size: 30px
+				color: $turquoise
+			&_text
+				margin-top: 20px
+				font-weight: 300
+				text-align: justify
+				font-size: 17px
+				color: $white
+
+.label
+	margin: 0 auto
+	width: 300px
+	height: 30px
+	font-weight: 400
+	font-size: 19px
+	text-align: center
+	text-transform: uppercase
+	color: $dark-blue
+	background: $white
+
+.author
+	padding: 50px 0
+	&_item
+		margin-top: 30px
+		display: flex
+		flex-direction: column
+		justify-content: center
+		align-items: center
+		&_img
+			width: 400px
+			border-radius: 100%
+			img
+				width: 100%
+				border-radius: 100%
+		&_descr
+			width: 700px
+			&_header
+				margin-top: 15px
+				font-weight: 500
+				font-size: 27px
+				color: $turquoise
+				text-align: center
+			&_text
+				font-weight: 300
+				text-align: center
+				font-size: 17px
+				line-height: 21px
+				color: $white
+
+.video_block
+	@include section
+	&_item
+		position: relative
+		margin: 0 auto
+		margin-top: 50px
+		display: flex
+		align-items: center
+		justify-content: center
+		height: 600px
+		width: 800px
+		border: 5px solid $turquoise
+		border-radius: 5%
+		video
+			width: 100%
+			height: 100%
+			border-radius: 5%
+	.btn
+		display: block
+		max-width: 300px
+		margin: 0 auto
+		margin-top: 50px
+		text-transform: uppercase
+		box-shadow: none
+
+canvas
+	position: absolute			
+
+footer 
+	padding: 39px 23px
+	a 
+		&:hover 
+			text-decoration: none
+.footer
+	&_line
+		margin: 0 auto
+		width: 300px
+		height: 4px
+		background-color: $white
+	&_wrapper
+		display: flex 
+		justify-content: center
+		align-items: center
+		padding-top: 32px
+	&_social
+		width: 300px
+		display: flex
+		justify-content: space-around
+		&_item
+			margin: 0 4px 
+			display: flex
+			justify-content: center
+			align-items: center
+			width: 46px
+			height: 46px
+			border-radius: 100%
+			background: $white
+			text-decoration: none
+			cursor: pointer
+			transition: .2s ease-in-out
+			i
+				color: $dark-blue
+				font-size: 30px
+			&:hover
+				background: $dark-blue
+				i
+					color: $white
+
+.modal_greetings
+	position: fixed
+	top: 0
+	left: 0
+	display: none
+	width: 100%
+	height: 100%
+	background-color: rgba(0, 0, 0, .5)
+	overflow: hidden
+	z-index: 1050
+	&_container
+		max-width: 600px
+		height: auto
+		margin: 50px auto
+		background-color: $white
+		&_content
+			padding: 50px
+			display: flex
+			flex-direction: column
+			align-items: center
+			i
+				font-size: 70px
+				color: green
+			&_item:nth-child(2)
+				margin-top: 30px
+				font-size: 30px
+
+.switch
+	border-color: #dc3545
+	color: #dc3545
+	background-color: transparent
+	&:hover
+		background-color: #dc3545
+		color: $white
+

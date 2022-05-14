@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ua">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap">
+    <script src="https://kit.fontawesome.com/5ef234d5db.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.min.css">
+
+    <title>Біометрична ідентифікація</title>
+</head>
+
+<body>
+    <script defer async src="js/face-api.min.js"></script>
+    <script defer async src="js/script.js"></script>
+
+    <div class="body_bg">
+    <header>
+        <div class="name">
+            <div class="container">
+                <div class="name_item">ЗАСОБИ БІОМЕТРИЧНОЇ ІДЕНТИФІКАЦІЇ З ВИКОРИСТАННЯМ WEB-ТЕХНОЛОГІЙ</div>
+            </div>
+        </div>
+    </header>
+
+    <section class="program">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="program_item">
+                        <div class="program_item_img">
+                            <img src="img/program_code.jpg" alt="program">
+                        </div>
+                         <div class="program_item_descr">
+                            <div class="program_item_descr_header">Вступ</div>
+                            <div class="program_item_descr_text">На сьогоднішній день світ безупинно розвивається та прогресує: з’являються нові технології, розроблюються нові програми, проводиться удосконалення систем та винаходів, які покращують наше життя. Телефони, персональні комп’ютери, планшети, ноутбуки є невід’ємної частиною нашого життя. Завдяки програмістам, розробникам різноманітного ПО та виробникам різноманітних електричних приладів, ми дійшли до Інформаційної Ери. <br> <br> В цій ері майже кожний прилад намагаються під’єднати до мережі та користуватися дистанційно, наприклад роботи-пилососи, телевізори, кондиціонери, сигналізації, веб-камери тощо. Тому і з’являється необхідність захищати все, оскільки з розвитком технологій, розвиваються й методи несанкціонованого доступу.  <br> <br> На цьому сайті ми з  вами реалізуємо детектор обличчя, який дуже часто використовується в компаніях та підприємствах, як один з методів контролю пропускного пункту та ведення журналу відвідувачів.</div>
+                         </div>   
+                    </div> <!-- program_item -->
+
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </section>
+
+    <section class="author">
+        <div class="label">Автор веб-сторінки</div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="author_item">
+                        <div class="author_item_img">
+                            <img src="img/author_copy.jpg" alt="auhtor">
+                        </div>
+                        <div class="author_item_descr">
+                            <div class="author_item_descr_header">Христевич Владислав Богданович</div>
+                            <div class="author_item_descr_text">студент Національного Авіаційного Університету ФККПІ БІ-443</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="videoBlock" class="video_block">
+        <div class="label">Ідентифікація обличчя</div>
+        <div class="container">
+            <div class="row">
+                <div class="col-8 offset-2 col-md-12 offset-md-0 col-lg-12 offset-lg-0">
+                    <div class="video_block_item">
+                        <video id="video" autoplay muted></video>
+                    </div>
+                </div>
+                <button id="video_button" type="button" class="btn btn-outline-success">увімкнути</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer_line"></div>
+        <div class="footer_wrapper">
+                <div class="footer_social">
+                    <a class="footer_social_item">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a class="footer_social_item" target="#blank" href="https://twitter.com/Vladysl50292336?t=l2sUNP25fH7O8f3iJ5B-Zw&s=09">
+                        <i class="fa-brands fa-twitter"></i>
+                    </a>
+                    <a class="footer_social_item" target="#blank" href="https://t.me/ineed_a_dollar">
+                        <i class="fa-brands fa-telegram"></i>
+                    </a>
+                    <a class="footer_social_item" target="#blank" href="https://www.instagram.com/johnniewalked/">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+    </footer>
+
+
+</div> <!-- rotates bg -->
+  
+<section class="modal_greetings">
+    <div class="modal_greetings_container">
+        <div class="modal_greetings_container_content">
+            <div class="modal_greetings_container_content_item">
+                <i class="fa-solid fa-circle-check fa-bounce" style=" --fa-bounce-start-scale-x: 1; --fa-bounce-start-scale-y: 1; --fa-bounce-jump-scale-x: 1; --fa-bounce-jump-scale-y: 1; --fa-bounce-land-scale-x: 1; --fa-bounce-land-scale-y: 1; --fa-bounce-rebound: 0; --fa-animation-iteration-count: 3" ></i>
+            </div>
+            <div class="modal_greetings_container_content_item">
+                <span>Access granted.</span>
+            </div> <!-- item -->
+        </div> <!-- content -->
+    </div> <!-- container -->
+</section>
+
+
+
+
+
+</body>
+</html>
