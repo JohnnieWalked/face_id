@@ -3,9 +3,10 @@
 const video = document.getElementById('video'),
 	  videoSize = document.querySelector('.video_block_item'),
 	  videoButton = document.getElementById('video_button'),
-	  videoSection = document.querySelector('.video_block');
-
-let labelName;
+	  videoSection = document.querySelector('.video_block'),
+	  modalWindow = document.querySelector('.modal_greetings'),
+	  user = document.getElementById('user'),
+	  modalButton = document.getElementById('modal_button');
 	  
 const switchEvent = videoButton.addEventListener("click", () => {
 
@@ -16,6 +17,7 @@ const switchEvent = videoButton.addEventListener("click", () => {
 		} else {
 			videoButton.textContent = "увімкнути";
 			stopVideo();
+			clearInterval(func);
 		}
 	
 });
@@ -39,9 +41,6 @@ function startVideo() {
 }
 
 async function recognizeFaces() {
-	const labeledDescriptors = await loadLabeledImages();
-	console.log(labeledDescriptors);
-	const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors, 0.5);
 	const message = {
 		loading: "img/spinner.svg",
 		msg: "Завантаження моделей..."
@@ -65,18 +64,23 @@ async function recognizeFaces() {
 	`;
 	videoSection.append(statusMessage, statusDescr);
 
-		video.addEventListener('play', async () => {
-			let labelName;
-			statusMessage.remove();
-			statusDescr.remove();
+	const labeledDescriptors = await loadLabeledImages();
+	console.log(labeledDescriptors);
+	const faceMatcher = new faceapi.FaceMatcher(labeledDescriptors, 0.5);
 
-			console.log('Playing');
-			const canvas = faceapi.createCanvasFromMedia(video);
-			videoSize.append(canvas);
-			const displaySize = { width: video.clientWidth, height: video.clientHeight };
-			faceapi.matchDimensions(canvas, displaySize);
+	function videoPlay() {
+		modalWindow.classList.remove('hide');
+		statusMessage.remove();
+		statusDescr.remove();
 
-			setInterval(async () => {
+		console.log('Playing');
+		const canvas = faceapi.createCanvasFromMedia(video);
+		videoSize.append(canvas);
+		const displaySize = { width: video.clientWidth, height: video.clientHeight };
+		faceapi.matchDimensions(canvas, displaySize);
+
+		function test () {
+			let func = setInterval(async () => {
 				const detections = await faceapi.detectAllFaces(video).withFaceLandmarks().withFaceDescriptors();
 				const resizedDetections = faceapi.resizeResults(detections, displaySize);
 				canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
@@ -84,15 +88,39 @@ async function recognizeFaces() {
 				const results = resizedDetections.map((d) => {
 					return faceMatcher.findBestMatch(d.descriptor);
 				});
+
 				results.forEach( (result, i) => {
 					const box = resizedDetections[i].detection.box;
 					const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() });
 					drawBox.draw(canvas);
-					labelName = result.toString();
-					return labelName;
+					test.prop = result.toString();
+					setName(test.prop);
 				});
 			}, 100);
-		});	
+
+			setTimeout(() => {
+				clearInterval(func);
+				canvas.remove();
+				modalWindow.classList.remove('show');
+			}, 10000);
+		}
+
+		test();
+		console.dir(test);
+		setName(""); 
+
+		function setName(result) {
+			const labels = ['Vladyslav Khrystevych', 'Parhomenko', 'Bohdan Solovyov', 'German Shynder', 'Nikolay Sokolovskiy'];
+			labels.map((item) => {
+				if (result.includes(item)) {
+					modalWindow.classList.add('show');
+					user.innerHTML = item;
+				}
+			});
+		}
+	}
+
+		video.addEventListener('play', videoPlay());
 }
 
 function loadLabeledImages() {
@@ -106,7 +134,7 @@ function loadLabeledImages() {
 				// console.log(label + i + JSON.stringify(detections));
 				descriptions.push(detections.descriptor);
 			}
-			console.log(label + 'Faces Loaded');
+			console.log(label + ' Faces Loaded');
 			return new faceapi.LabeledFaceDescriptors(label, descriptions);
 		})
 	);
@@ -117,4 +145,22 @@ function stopVideo() {
 	const tracks = video.srcObject.getTracks();
 	tracks.forEach(track => track.stop());	
 }
+
+function closeModal() {
+	modalWindow.classList.remove('show');
+	modalWindow.classList.add('hide');
+	document.body.style.overflow = ``;
+}
+
+modalButton.addEventListener('click', () => {
+	closeModal();
+});
+
+document.addEventListener('keydown', (e) => {
+	if (e.code === `Escape` && modalWindow.classList.contains("show")) {
+		closeModal();
+	}
+});	
+
+
 
