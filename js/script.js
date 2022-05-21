@@ -6,7 +6,8 @@ const video = document.getElementById('video'),
 	  videoSection = document.querySelector('.video_block'),
 	  modalWindow = document.querySelector('.modal_greetings'),
 	  user = document.getElementById('user'),
-	  modalButton = document.getElementById('modal_button');
+	  modalButton = document.getElementById('modal_button'),
+	  photoUpload = document.getElementById('photoID');
 	  
 const switchEvent = videoButton.addEventListener("click", () => {
 
@@ -17,7 +18,6 @@ const switchEvent = videoButton.addEventListener("click", () => {
 		} else {
 			videoButton.textContent = "увімкнути";
 			stopVideo();
-			clearInterval(func);
 		}
 	
 });
@@ -104,23 +104,22 @@ async function recognizeFaces() {
 				modalWindow.classList.remove('show');
 			}, 10000);
 		}
-
 		test();
 		console.dir(test);
-		setName(""); 
-
-		function setName(result) {
-			const labels = ['Vladyslav Khrystevych', 'Parhomenko', 'Bohdan Solovyov', 'German Shynder', 'Nikolay Sokolovskiy'];
-			labels.map((item) => {
-				if (result.includes(item)) {
-					modalWindow.classList.add('show');
-					user.innerHTML = item;
-				}
-			});
-		}
+		setName(""); 	
 	}
 
 		video.addEventListener('play', videoPlay());
+}
+
+function setName(result) {
+	const labels = ['Vladyslav Khrystevych', 'Parhomenko', 'Bohdan Solovyov', 'German Shynder', 'Nikolay Sokolovskiy'];
+	labels.map((item) => {
+		if (result.includes(item)) {
+			modalWindow.classList.add('show');
+			user.innerHTML = item;
+		}
+	});
 }
 
 function loadLabeledImages() {
@@ -161,6 +160,65 @@ document.addEventListener('keydown', (e) => {
 		closeModal();
 	}
 });	
+
+
+/* --------------------------------------------------- Photo recognizer ------ */
+
+Promise.all([
+	faceapi.nets.faceLandmark68Net.loadFromUri('./models'),
+	faceapi.nets.faceRecognitionNet.loadFromUri('./models'),
+	faceapi.nets.ssdMobilenetv1.loadFromUri('./models')
+]).then(photoRecog);
+
+async function photoRecog() {
+	const container = document.querySelector('.container_photo');
+	const labeledFaceDescriptors = await loadLabeledImages();
+	const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.5);
+	let image;
+	let Newcanvas;
+
+	photoUpload.addEventListener('change', async () => {
+		modalWindow.classList.remove('hide');
+		if (image) {image.remove();}
+		if (Newcanvas) {Newcanvas.remove();}
+		image = await faceapi.bufferToImage(photoUpload.files[0]);
+		container.append(image);
+		container.append()
+		Newcanvas = faceapi.createCanvasFromMedia(image);
+		container.append(Newcanvas);
+		const displaySize = { width: image.clientWidth, height: image.clientHeight };
+		faceapi.matchDimensions(Newcanvas, displaySize);
+		const detections = await faceapi.detectAllFaces(image).withFaceLandmarks().withFaceDescriptors();
+		const resizedDetections = faceapi.resizeResults(detections, displaySize);
+		const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor));
+
+		results.forEach((result, i) => {
+			const box = resizedDetections[i].detection.box;
+			const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() });
+			drawBox.draw(Newcanvas);
+			let info = result.toString();
+			setName(info);
+		});
+	});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
