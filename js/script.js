@@ -22,11 +22,12 @@ const switchEvent = videoButton.addEventListener("click", () => {
 	
 });
 
-Promise.all([
+const faceModels = Promise.all([
 	faceapi.nets.faceLandmark68Net.loadFromUri('./models'),
 	faceapi.nets.faceRecognitionNet.loadFromUri('./models'),
 	faceapi.nets.ssdMobilenetv1.loadFromUri('./models')
-]).then(switchEvent);
+]);
+faceModels.then(switchEvent);
 
 function startVideo() {
 	console.log("Turning the video on...");
@@ -164,13 +165,9 @@ document.addEventListener('keydown', (e) => {
 
 /* --------------------------------------------------- Photo recognizer ------ */
 
-Promise.all([
-	faceapi.nets.faceLandmark68Net.loadFromUri('./models'),
-	faceapi.nets.faceRecognitionNet.loadFromUri('./models'),
-	faceapi.nets.ssdMobilenetv1.loadFromUri('./models')
-]).then(photoRecog);
+faceModels.then(photoUpload);
 
-async function photoRecog() {
+photoUpload.addEventListener('click', async () => {
 	const container = document.querySelector('.container_photo');
 	const labeledFaceDescriptors = await loadLabeledImages();
 	const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.5);
@@ -183,7 +180,6 @@ async function photoRecog() {
 		if (Newcanvas) {Newcanvas.remove();}
 		image = await faceapi.bufferToImage(photoUpload.files[0]);
 		container.append(image);
-		container.append()
 		Newcanvas = faceapi.createCanvasFromMedia(image);
 		container.append(Newcanvas);
 		const displaySize = { width: image.clientWidth, height: image.clientHeight };
@@ -200,7 +196,8 @@ async function photoRecog() {
 			setName(info);
 		});
 	});
-}
+});
+	
 
 
 
