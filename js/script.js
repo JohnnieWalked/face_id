@@ -33,7 +33,7 @@ function startVideo() {
 
 	recognizeFaces();
 
-	navigator.getUserMedia(
+	navigator.mediaDevices.getUserMedia(
 		{ video: {} },
 		stream => video.srcObject = stream,
 		err => console.error(err),
